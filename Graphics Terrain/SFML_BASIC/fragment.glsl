@@ -32,6 +32,11 @@ vec4 GenerateTerrainColor()
 	float region3max = 1.4 * 16.2;
     vec4 terrainColor = vec4(0.0, 0.0, 0.0, 1.0);
 
+
+	vec3 n = N.xyz;
+	vec3 L = normalize(gl_LightSource[0].position.xyz - v);
+	vec4 specular = gl_LightSource[0].specular * max(dot(N,L), 0.0) * 0.5f;  // pow function wouldn't compile, scaled by 0.5f instead
+
     float height = N.w;
     float regionMin = 0.0;
     float regionMax = 0.0;
@@ -45,7 +50,7 @@ vec4 GenerateTerrainColor()
     regionWeight = (regionRange - abs(height - regionMax)) / regionRange;
     regionWeight = max(0.0, regionWeight);
     //terrainColor += regionWeight * texture2D(seaTexture, gl_TexCoord[0].st);
-	terrainColor += regionWeight * seaTex;
+	terrainColor += regionWeight * seaTex + specular;
 
     // Terrain region 2.
     regionMin = region2min;

@@ -111,6 +111,8 @@ int main()
 
 	//all the lighting & texture blending code should  be put in 'fragment.glsl'
 	if(!shader.loadFromFile("vertex.glsl","fragment.glsl")){
+		char c;
+		std::cin >> c;
         exit(1);
     }
 
@@ -208,7 +210,7 @@ int main()
 		glColor3d(1, 1, 1);
 
 		//get the viewing transform from the camera
-		GLfloat lightPosition[] = { 30.0f, 10.0f, 10.0f, 0.0f };
+		GLfloat lightPosition[] = { 5.0f, 2.0f, 0.0f, 0.0f };
 		glLightfv(GL_LIGHT0, GL_POSITION, lightPosition);
 		camera.ViewingTransform();
 
